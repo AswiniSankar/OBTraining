@@ -2,52 +2,51 @@ package com.corejava.assignments;
 
 import java.util.Scanner;
 
-class Box{
-	double Width;
-	double Height;
-	double Lenght;
-	
+class Box {
+	double width;
+	double height;
+	double lenght;
+
 	public Box() {
-		
-		this.Width = 1;
-		this.Height = 1;
-		this.Lenght = 1;
+
+		this.width = 1;
+		this.height = 1;
+		this.lenght = 1;
 	}
+
 	public Box(double height) {
-		
+
 		this();
-		this.Height = height;
+		this.height = height;
 	}
-	
+
 	public Box(double width, double lenght) {
 		this();
-		this.Width = width;
-		this.Height = lenght;
-		
+		this.width = width;
+		this.height = lenght;
+
 	}
 
 	public Box(double width, double height, double lenght) {
-	
-		this.Width = width;
-		this.Height = height;
-		this.Lenght = lenght;
-		
+
+		this.width = width;
+		this.height = height;
+		this.lenght = lenght;
+
 	}
-	public void Volume() {
-	
-		System.out.println(Width*Height*Lenght);
-	
+
+	public void volume() {
+
+		System.out.println(width * height * lenght);
+
 	}
-	
-	
-	
+
 }
 
-public class BoxClass {
+public class ConstructorOverLoading {
 
-	
 	public static void main(String[] args) {
-	
+
 		Scanner sc = new Scanner(System.in);
 		double width = sc.nextDouble();
 		double lenght = sc.nextDouble();
@@ -56,11 +55,11 @@ public class BoxClass {
 		Box o2 = new Box(height);
 		Box o3 = new Box(width, lenght);
 		Box o4 = new Box(width, height, lenght);
-		o1.Volume();
-		o2.Volume();
-		o3.Volume();
-		o4.Volume();
-        sc.close();
+		o1.volume();
+		o2.volume();
+		o3.volume();
+		o4.volume();
+		sc.close();
 	}
 
 }

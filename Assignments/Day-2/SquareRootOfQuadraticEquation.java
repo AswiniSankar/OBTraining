@@ -7,7 +7,6 @@ import static java.lang.Math.*;
 public class SquareRootOfQuadraticEquation {
 
 	public static void main(String[] args) throws IOException {
-		@SuppressWarnings({ "resource" })
 		Scanner sc = new Scanner(System.in);
 		double a = sc.nextDouble();
 		double b = sc.nextDouble();
@@ -23,7 +22,8 @@ public class SquareRootOfQuadraticEquation {
 		} else if (determinant == 0) {
 			System.out.println("Root is:" + (-b + squareroot) / (2 * a));
 		}
-		
+		sc.close();
+
 	}
 
 }
