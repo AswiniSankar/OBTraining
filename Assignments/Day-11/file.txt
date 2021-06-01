@@ -1,0 +1,425 @@
+mysql> Terminal close -- exit!
+Aborted
+mysql>  show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| SQLTRAINING        |
+| mysql              |
+| onebill            |
+| onebill1           |
+| onebill2           |
+| performance_schema |
+| sys                |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use  SQLTRAINING;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql>  show tables;
++-----------------------+
+| Tables_in_SQLTRAINING |
++-----------------------+
+| Employee              |
+| customer              |
+| item                  |
+| office                |
+| orders                |
+| person                |
+| sales                 |
++-----------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++-------+---------+-------------+-----------+------------+------------+--------+------+------+-------------------+
+| empid | name    | email       | mobile    | doj        | dob        | gender | exp  | dept | designation       |
++-------+---------+-------------+-----------+------------+------------+--------+------+------+-------------------+
+|     1 | Rahul   | r@r.com     | 234234234 | 2015-11-09 | 1980-12-30 | m      |    6 | A    | Software Engineer |
+|     2 | Rohit   | r@r.in      | 784234234 | 2014-11-09 | 1983-10-30 | m      |    7 | B    | Tester            |
+|     3 | Rajath  | ra@r.in     | 798234234 | 2014-11-09 | 1975-10-30 | m      |   10 | B    | Tester            |
+|     4 | Rakesh  | ra@r.in     | 798234234 | 2019-11-09 | 1990-10-30 | m      |    3 | A    | Software Engineer |
+|     5 | Reshma  | reshma@r.in | 999234234 | 2020-11-09 | 1989-10-30 | f      |    3 | B    | Software Engineer |
+|     6 | Radhika | rad@r.in    | 907234234 | 2019-10-09 | 1991-11-09 | f      |    4 | B    | Software Engineer |
+|     7 | Riya    | raiya@r.in  | 782929234 | 2018-11-09 | 1994-11-09 | f      |    4 | A    | Tester            |
++-------+---------+-------------+-----------+------------+------------+--------+------+------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> select max(exp) from Employee where exp< (select max(exp) from Employee where exp< (select max(exp) from Employee ));
++----------+
+| max(exp) |
++----------+
+|        6 |
++----------+
+1 row in set (0.01 sec)
+
+mysql>  select * from Employee where exp = (select max(exp) from Employee where exp< (select max(exp) from Employee where exp< (select max(exp) from Employee )));
++-------+-------+---------+-----------+------------+------------+--------+------+------+-------------------+
+| empid | name  | email   | mobile    | doj        | dob        | gender | exp  | dept | designation       |
++-------+-------+---------+-----------+------------+------------+--------+------+------+-------------------+
+|     1 | Rahul | r@r.com | 234234234 | 2015-11-09 | 1980-12-30 | m      |    6 | A    | Software Engineer |
++-------+-------+---------+-----------+------------+------------+--------+------+------+-------------------+
+1 row in set (0.01 sec)
+
+
+mysql> describe Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Name   | varchar(30) | YES  |     | NULL    |       |
+| Gender | char(6)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Student;
++--------------+--------+
+| Name         | Gender |
++--------------+--------+
+| Hermonie     | Female |
+| Harry Potter | Male   |
++--------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select LENGHT(Gender) from Student;
+ERROR 1305 (42000): FUNCTION SQLTRAINING.LENGHT does not exist
+mysql> SELECT LENGTH(Gender) FROM Student;
++----------------+
+| LENGTH(Gender) |
++----------------+
+|              6 |
+|              4 |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> describe office;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| officecode | int(11)     | YES  |     | NULL    |       |
+| city       | varchar(30) | YES  |     | NULL    |       |
+| phone      | float       | YES  |     | NULL    |       |
+| address1   | varchar(50) | YES  |     | NULL    |       |
+| address2   | varchar(50) | YES  |     | NULL    |       |
+| state      | varchar(20) | YES  |     | NULL    |       |
+| postalcode | mediumtext  | YES  |     | NULL    |       |
+| country    | varchar(30) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from office;
++------------+---------------+--------+----------+----------+-------+------------+---------+
+| officecode | city          | phone  | address1 | address2 | state | postalcode | country |
++------------+---------------+--------+----------+----------+-------+------------+---------+
+|          1 | San Francisco | 423423 | sdsd     | sdsd     | CA    | 9880       | USA     |
+|          2 | San Diego     | 423423 | sdsd     | sdsd     | CA    | 98041      | USA     |
+|          3 | Middletown    | 420023 | sdsd     | sdsd     | NY    | 8041       | UK      |
++------------+---------------+--------+----------+----------+-------+------------+---------+
+3 rows in set (0.01 sec)
+
+mysql> alter table office add column status varchar(30);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from office;
++------------+---------------+--------+----------+----------+-------+------------+---------+--------+
+| officecode | city          | phone  | address1 | address2 | state | postalcode | country | status |
++------------+---------------+--------+----------+----------+-------+------------+---------+--------+
+|          1 | San Francisco | 423423 | sdsd     | sdsd     | CA    | 9880       | USA     | NULL   |
+|          2 | San Diego     | 423423 | sdsd     | sdsd     | CA    | 98041      | USA     | NULL   |
+|          3 | Middletown    | 420023 | sdsd     | sdsd     | NY    | 8041       | UK      | NULL   |
++------------+---------------+--------+----------+----------+-------+------------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update office set status = 'shipping';
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> update office set status = 'shipping' where officecode = 1;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> update office set status = 'dispatched' where officecode = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update office set status = 'placed' where officecode = 3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from office;
++------------+---------------+--------+----------+----------+-------+------------+---------+------------+
+| officecode | city          | phone  | address1 | address2 | state | postalcode | country | status     |
++------------+---------------+--------+----------+----------+-------+------------+---------+------------+
+|          1 | San Francisco | 423423 | sdsd     | sdsd     | CA    | 9880       | USA     | shipping   |
+|          2 | San Diego     | 423423 | sdsd     | sdsd     | CA    | 98041      | USA     | dispatched |
+|          3 | Middletown    | 420023 | sdsd     | sdsd     | NY    | 8041       | UK      | placed     |
++------------+---------------+--------+----------+----------+-------+------------+---------+------------+
+3 rows in set (0.01 sec)
+
+mysql> DELIMITER &&
+mysql> CREATE PROCEDURE SetCounter(
+    -> INOUT counter INT,
+    -> IN inc INT
+    -> )
+    -> BEGIN
+    -> SET counter = counter + inc;
+    -> END
+    -> &&
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> SET @counter = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL SetCounter(@counter,1);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @counter;
++----------+
+| @counter |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> CALL SetCounter(@counter,10);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @counter;
++----------+
+| @counter |
++----------+
+|       12 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> CALL SetCounter(@counter,17);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @counter;
++----------+
+| @counter |
++----------+
+|       29 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> delimiter &&   
+mysql> CREATE PROCEDURE GetOrderCountByStatus (
+    -> IN  orderStatus VARCHAR(25),
+    -> OUT total INT
+    -> )
+    -> BEGIN
+    -> SELECT COUNT(status)
+    -> INTO total
+    -> from office
+    -> where status = orderStatus;
+    -> END &&
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL GetOrderCountByStatus('Shipping',@total);
+    -> &&
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @total;
+    -> &&
++--------+
+| @total |
++--------+
+|      1 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer;
+    -> &&
++-----+---------------+-------------+
+| cid | customer_name | designation |
++-----+---------------+-------------+
+|   1 | Rohan         | Engineer    |
+|   2 | Raj           | Tester      |
+|   3 | Rohit         | Analyst     |
++-----+---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> delimiter ;
+mysql>  select * from orders;
++-----+--------+------+
+| oid | amount | cid  |
++-----+--------+------+
+| 601 | 10000  |    1 |
+| 602 | 20000  |    4 |
+| 603 | 15000  |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from orders left join  customer on orders.cid= customer.cid;
++-----+--------+------+------+---------------+-------------+
+| oid | amount | cid  | cid  | customer_name | designation |
++-----+--------+------+------+---------------+-------------+
+| 601 | 10000  |    1 |    1 | Rohan         | Engineer    |
+| 603 | 15000  |    2 |    2 | Raj           | Tester      |
+| 602 | 20000  |    4 | NULL | NULL          | NULL        |
++-----+--------+------+------+---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from orders right join  customer on orders.cid= customer.cid;
++------+--------+------+-----+---------------+-------------+
+| oid  | amount | cid  | cid | customer_name | designation |
++------+--------+------+-----+---------------+-------------+
+|  601 | 10000  |    1 |   1 | Rohan         | Engineer    |
+|  603 | 15000  |    2 |   2 | Raj           | Tester      |
+| NULL | NULL   | NULL |   3 | Rohit         | Analyst     |
++------+--------+------+-----+---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from orders left join  customer on orders.cid= customer.cid union  select * from orders right join  customer on orders.cid= customer.cid;
++------+--------+------+------+---------------+-------------+
+| oid  | amount | cid  | cid  | customer_name | designation |
++------+--------+------+------+---------------+-------------+
+|  601 | 10000  |    1 |    1 | Rohan         | Engineer    |
+|  603 | 15000  |    2 |    2 | Raj           | Tester      |
+|  602 | 20000  |    4 | NULL | NULL          | NULL        |
+| NULL | NULL   | NULL |    3 | Rohit         | Analyst     |
++------+--------+------+------+---------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Student;
++--------------+--------+
+| Name         | Gender |
++--------------+--------+
+| Hermonie     | Female |
+| Harry Potter | Male   |
++--------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> delete from Student;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select * from Student;
+Empty set (0.00 sec)
+
+mysql> describe Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Name   | varchar(30) | YES  |     | NULL    |       |
+| Gender | char(6)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> truncate Student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> describe Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Name   | varchar(30) | YES  |     | NULL    |       |
+| Gender | char(6)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Student;
+Empty set (0.00 sec)
+
+mysql> insert into  Student values('Harry','male'); 
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Student;
++-------+--------+
+| Name  | Gender |
++-------+--------+
+| Harry | male   |
++-------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into  Student values('Hermonie','female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from Student;
++----------+--------+
+| Name     | Gender |
++----------+--------+
+| Harry    | male   |
+| Hermonie | female |
++----------+--------+
+2 rows in set (0.01 sec)
+
+mysql> delete from Student where Name = 'Harry';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from Student;
++----------+--------+
+| Name     | Gender |
++----------+--------+
+| Hermonie | female |
++----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select *  from Employee;
++-------+---------+-------------+-----------+------------+------------+--------+------+------+-------------------+
+| empid | name    | email       | mobile    | doj        | dob        | gender | exp  | dept | designation       |
++-------+---------+-------------+-----------+------------+------------+--------+------+------+-------------------+
+|     1 | Rahul   | r@r.com     | 234234234 | 2015-11-09 | 1980-12-30 | m      |    6 | A    | Software Engineer |
+|     2 | Rohit   | r@r.in      | 784234234 | 2014-11-09 | 1983-10-30 | m      |    7 | B    | Tester            |
+|     3 | Rajath  | ra@r.in     | 798234234 | 2014-11-09 | 1975-10-30 | m      |   10 | B    | Tester            |
+|     4 | Rakesh  | ra@r.in     | 798234234 | 2019-11-09 | 1990-10-30 | m      |    3 | A    | Software Engineer |
+|     5 | Reshma  | reshma@r.in | 999234234 | 2020-11-09 | 1989-10-30 | f      |    3 | B    | Software Engineer |
+|     6 | Radhika | rad@r.in    | 907234234 | 2019-10-09 | 1991-11-09 | f      |    4 | B    | Software Engineer |
+|     7 | Riya    | raiya@r.in  | 782929234 | 2018-11-09 | 1994-11-09 | f      |    4 | A    | Tester            |
++-------+---------+-------------+-----------+------------+------------+--------+------+------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from Employee having exp>5;
++-------+--------+---------+-----------+------------+------------+--------+------+------+-------------------+
+| empid | name   | email   | mobile    | doj        | dob        | gender | exp  | dept | designation       |
++-------+--------+---------+-----------+------------+------------+--------+------+------+-------------------+
+|     1 | Rahul  | r@r.com | 234234234 | 2015-11-09 | 1980-12-30 | m      |    6 | A    | Software Engineer |
+|     2 | Rohit  | r@r.in  | 784234234 | 2014-11-09 | 1983-10-30 | m      |    7 | B    | Tester            |
+|     3 | Rajath | ra@r.in | 798234234 | 2014-11-09 | 1975-10-30 | m      |   10 | B    | Tester            |
++-------+--------+---------+-----------+------------+------------+--------+------+------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql> select *  from item;
++--------+----------+----------+-------+-----------+
+| itemid | itemdesc | quantity | price | category  |
++--------+----------+----------+-------+-----------+
+|      1 | perfume  |      100 |   100 | cosmetics |
+|      2 | Marie    |      100 |    10 | snacks    |
++--------+----------+----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select *  from sales;
++-----+--------+---------+--------+-------+
+| sid | itemid | qtysold | prince | total |
++-----+--------+---------+--------+-------+
+| 101 |      2 |       3 |     10 |    30 |
+| 102 |      1 |       2 |    100 |   200 |
++-----+--------+---------+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into sales values(103,1,2,100,0);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *  from item;
++--------+----------+----------+-------+-----------+
+| itemid | itemdesc | quantity | price | category  |
++--------+----------+----------+-------+-----------+
+|      1 | perfume  |       98 |   100 | cosmetics |
+|      2 | Marie    |      100 |    10 | snacks    |
++--------+----------+----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sales;
++-----+--------+---------+--------+-------+
+| sid | itemid | qtysold | prince | total |
++-----+--------+---------+--------+-------+
+| 101 |      2 |       3 |     10 |    30 |
+| 102 |      1 |       2 |    100 |   200 |
+| 103 |      1 |       2 |    100 |   200 |
++-----+--------+---------+--------+-------+
+3 rows in set (0.00 sec)
+
