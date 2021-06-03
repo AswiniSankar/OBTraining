@@ -7,26 +7,37 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DisplayAll {
-	 Connection con = null;
-	 Statement stmt = null;
-	 ResultSet rs = null;
-	public  DisplayAll() throws ClassNotFoundException, InterruptedException {
+	Connection con = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+
+	public DisplayAll() throws ClassNotFoundException, InterruptedException {
 		try {
-			 
-				Class.forName("com.mysql.jdbc.Driver");
-	
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/MusicPlayer","onebill","onebill");
+
+			Class.forName("com.mysql.jdbc.Driver");
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/MusicPlayer", "onebill", "onebill");
 			String query = "select * from MusicFiles order by  Song_Title ";
-			
-		      stmt= con.createStatement();
-		      rs= stmt.executeQuery(query);
-		
-		      while(rs.next()) {	
-					System.out.println(rs.getString("Song_Title") +"\t"+rs.getString("Artist_Name")+"\t"+rs.getString("Album_Name")+"\t"+rs.getString("Song_Location") +"\t"+rs.getString("Description") );
-					
-				} 
-			
-		
+
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+
+			System.out.println(
+					"--------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(
+					"Song_ID | Song_Title           | Artist_Name                       | Album_Name      | Song_Location            | Description ");
+			System.out.println(
+					"--------------------------------------------------------------------------------------------------------------------------------");
+
+			while (rs.next()) {
+				System.out.println("|" + rs.getString("Song_Title") + "\t|" + rs.getString("Artist_Name") + "\t|"
+						+ rs.getString("Album_Name") + "\t|" + rs.getString("Song_Location") + "\t\t|"
+						+ rs.getString("Description") + "|");
+
+			}
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -43,8 +54,6 @@ public class DisplayAll {
 			}
 		}
 
-	
-		
 	}
 
 }

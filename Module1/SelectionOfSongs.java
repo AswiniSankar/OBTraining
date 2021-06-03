@@ -15,7 +15,7 @@ public class SelectionOfSongs {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 
-	public void Display(char ch) {
+	public void display(char ch) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/MusicPlayer", "onebill", "onebill");
@@ -28,7 +28,7 @@ public class SelectionOfSongs {
 				}
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(query);
-				PrintSongs(rs);
+				printSongs(rs);
 			} else if (ch == 'C') {
 				Scanner s = new Scanner(System.in);
 				System.out.println("Enter the song name");
@@ -38,7 +38,7 @@ public class SelectionOfSongs {
 				pstmt.setString(1, song);
 				rs = pstmt.executeQuery();
 
-				PrintSongs(rs);
+				printSongs(rs);
 				s.close();
 			}
 
@@ -61,15 +61,19 @@ public class SelectionOfSongs {
 		}
 	}
 
-	void PrintSongs(ResultSet rs) throws InterruptedException {
+	void printSongs(ResultSet rs) throws InterruptedException {
 		try {
 			int flag = 0;
+			System.out.println("Song_Title" + "\t" + "Artist_Name" + "\t" + "Album_Name" + "\t" + "\t" + "Song_Location"
+					+ "\t" + "Description");
 			while (rs.next()) {
 
 				System.out.println(rs.getString("Song_Title") + "\t" + rs.getString("Artist_Name") + "\t"
 						+ rs.getString("Album_Name") + "\t" + rs.getString("Song_Location") + "\t"
 						+ rs.getString("Description"));
-				TimeUnit.SECONDS.sleep(5);
+				System.out.println("Song is playing...");
+				TimeUnit.SECONDS.sleep(20);
+				System.out.println("song played...");
 				flag = 1;
 			}
 			if (flag == 0) {
